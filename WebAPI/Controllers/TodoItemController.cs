@@ -47,6 +47,7 @@ namespace WebAPI.Controllers
         }
 
         // PUT: api/TodoItem/batch
+        // Submit
         [HttpPut]
         [Route("batch")]
         public async Task<IActionResult> PutTodoItems([FromBody] TodoItem[] todos)
@@ -120,10 +121,9 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             _context.TodoItems.Add(todoItem);
+            _context.Entry(todoItem).State = EntityState.Added;
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetTodoItem", new { id = todoItem.id }, todoItem);
         }
 
